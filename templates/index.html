@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>上传图片</title>
+        <link rel="shortcut icon" href="../static/img/icon.JPG"/>
+		<script>
+			function showImg(file) {
+				var reader = new FileReader();
+				reader.onload = function (evt){
+					document.getElementById('myImgID').src = evt.target.result;
+				}
+				reader.readAsDataURL(file.files[0])
+			}
+
+		</script>
+        <script type="text/javascript">
+            function show (event) {
+                //取消冒泡
+                let oevent = event || window.event
+                if (document.all) {
+                    oevent.cancelBubble = true
+                } else {
+                    oevent.stopPropagation()
+                }
+                if (document.getElementById('div').style.display === 'none' || document.getElementById('div').style.display === '') {
+                    document.getElementById('div').style.display = 'block'
+                } else {
+                    document.getElementById('div').style.display = 'none'
+                }
+            }
+            document.onclick = function () {
+                document.getElementById('div').style.display = 'none'
+            }
+            document.getElementById('div').onclick = function (event) {
+                let oevent = event || window.event
+                oevent.stopPropagation()
+            }
+
+        </script>
+
+		<link rel="stylesheet" href="../static/css/index.css" />
+	</head>
+	<body>
+		<div class="login">
+			<h2>XJTLU</h2>
+			<form  class="login_box" method="post" action="/uploadImg" enctype="multipart/form-data">
+				<input class="up_file" type="file" name="myImg" onchange="showImg(this)">
+				<img id="myImgID">
+				<input class="sub" type="submit" value="上传图片" onclick="show()">
+                <p style="color: white; margin: 20px; display: none; text-align: center" id="div">
+                    正在进行OCR识别，预计共需要8秒，请稍后……
+                </p>
+            </form>
+
+		</div>
+	</body>
+</html>
